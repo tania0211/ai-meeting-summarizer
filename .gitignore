@@ -1,21 +1,13 @@
 # Python
+venv/
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-*.db
-*.sqlite3
-*.egg-info/
-venv/
 
 # Node
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnp
-.pnp.js
+dist/
+build/
 
-# VSCode / IDE
-.vscode/
-.idea/
+# OS files
+.DS_Store
+Thumbs.db
