@@ -12,14 +12,12 @@ function App() {
     <div className="min-h-screen bg-gray-900 text-white">
       <Navbar />
       <div className="p-6 max-w-3xl mx-auto">
-        {/* Pass state setters down to UploadForm */}
         <UploadForm
           setSummary={setSummary}
           setActions={setActions}
           setTranscript={setTranscript}
         />
 
-        {/* Only render card when summary is available */}
         {summary && (
           <SummaryCard
             summary={summary}
@@ -33,3 +31,4 @@ function App() {
 }
 
 export default App;
+

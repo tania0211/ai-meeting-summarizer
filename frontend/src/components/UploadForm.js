@@ -2,13 +2,18 @@ import { useState } from "react";
 
 function UploadForm({ setSummary, setActions, setTranscript }) {
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleUpload = async (event) => {
     event.preventDefault();
     const file = event.target.fileInput.files[0];
-    if (!file) return;
+    if (!file) {
+      setErrorMsg("Please upload an audio file.");
+      return;
+    }
 
     setLoading(true);
+    setErrorMsg("");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -19,13 +24,17 @@ function UploadForm({ setSummary, setActions, setTranscript }) {
         body: formData,
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
 
-      setSummary(data.summary);
-      setActions(data.action_items);
-      setTranscript(data.transcript);
+      const data = await response.json();
+      setSummary(data.summary || "No summary available");
+      setActions(data.action_items || []);
+      setTranscript(data.transcript || "No transcript available");
     } catch (error) {
       console.error("Upload failed:", error);
+      setErrorMsg("Failed to process audio. Please try again.");
     }
 
     setLoading(false);
@@ -55,9 +64,10 @@ function UploadForm({ setSummary, setActions, setTranscript }) {
         >
           {loading ? "Uploading..." : "Upload & Summarize"}
         </button>
+
+        {errorMsg && <p className="text-red-400 mt-2">{errorMsg}</p>}
       </form>
 
-      {/* Full screen overlay loader */}
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50">
           <div className="w-14 h-14 border-4 border-white border-t-transparent rounded-full animate-spin"></div>

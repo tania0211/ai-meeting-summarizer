@@ -1,29 +1,24 @@
 function SummaryCard({ summary, actions, transcript }) {
   return (
-    <div className="bg-gray-800 p-6 rounded-2xl shadow-lg mt-6 space-y-6">
-      {/* Summary Section */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2 text-blue-400">Summary</h2>
-        <p className="text-gray-200">{summary}</p>
-      </div>
+    <div className="bg-gray-800 p-6 rounded-2xl shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-4 text-blue-400">Meeting Summary</h2>
+      <p className="mb-4">{summary}</p>
 
-      {/* Action Items Section */}
-      {actions && actions.length > 0 && (
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-green-400">Action Items</h2>
-          <ul className="list-disc pl-5 space-y-1 text-gray-200">
-            {actions.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
+      <h3 className="text-xl font-semibold text-green-400 mb-2">
+        Action Items
+      </h3>
+      {actions.length > 0 ? (
+        <ul className="list-disc list-inside mb-4">
+          {actions.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mb-4">No action items found.</p>
       )}
 
-      {/* Transcript Section */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2 text-yellow-400">Transcript</h2>
-        <p className="text-gray-300 text-sm leading-relaxed">{transcript}</p>
-      </div>
+      <h3 className="text-xl font-semibold text-purple-400 mb-2">Transcript</h3>
+      <p className="whitespace-pre-wrap">{transcript}</p>
     </div>
   );
 }
